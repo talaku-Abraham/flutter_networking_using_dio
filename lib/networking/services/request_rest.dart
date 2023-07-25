@@ -10,9 +10,13 @@ class RequestRest {
   static final _client = http.Client();
 
   Future<T> executeGet<T>(JsonParser<T> parser) async {
-    final response = await _client.get(Uri.parse('$baseUrl/$endpoint'));
-    // print(response.body);
-    return parser.parseFromJson(response.body);
+    try {
+      final response = await _client.get(Uri.parse('$baseUrl/$endpoint'));
+      // print(response.body);
+      return parser.parseFromJson(response.body);
+    } catch (err) {
+      throw err.toString();
+    }
   }
 
   Future<T> executePost<T>(JsonParser<T> parser) async {
